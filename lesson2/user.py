@@ -14,10 +14,60 @@
 
 
 class User:
-    pass
+    _name: str
+    _password: str
+    _is_admin: bool
+    _is_logged_in: bool
 
 
-# код для проверки 
+    def __init__(self, name: str, password: str) -> None:
+        self._name = name
+        self._password = password
+        self._is_admin = False
+        self._is_logged_in = False
+
+
+    @property
+    def name(self) -> str:
+        return self._name
+
+
+    @property
+    def password(self) -> str:
+        return self._password
+
+
+    @password.setter
+    def password(self, password: str) -> None:
+        self._password = password
+
+    @property
+    def is_admin(self) -> bool:
+        """Проверяет, является ли пользователь администратором."""
+        return self._is_admin
+
+
+    @is_admin.setter
+    def is_admin(self, is_admin: bool) -> None:
+        self._is_admin = is_admin
+
+
+    def login(self, password: str) -> bool:
+        """Проверяет пароль и выполняет вход, если пароль верный."""
+        if password == self._password:
+            self._is_logged_in = True
+            return True
+        return False
+
+    def logout(self) -> None:
+        """Выполняет выход из аккаунта, если пользователь был залогинен."""
+        if self._is_logged_in:
+            self._is_logged_in = False
+
+
+
+
+# код для проверки
 user1 = User("Alice", "qwerty")
 print(user1.name)  # Alice
 print(user1.password)  # qwerty
@@ -29,5 +79,5 @@ print(user1.password)  # newpassword
 user1._is_admin = True
 print(user1.is_admin)  # True
 
-user1.login("newpassword")  # True
+print(user1.login("newpassword"))  # True
 user1.logout()
